@@ -1,9 +1,10 @@
 {
-  "name": "node-starter-challenge",
-  "main": "src/index.js",
+  "name": "node-express-starter",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node server.js"
   },
+  "private": true,
   "dependencies": {
     "@babel/core": "7.4.5",
     "@babel/node": "7.4.5",
