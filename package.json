@@ -2,7 +2,7 @@
   "name": "node-express-starter",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node server.js"
+    "start": "nodemon --exec babel-node server.js"
   },
   "private": true,
   "dependencies": {
