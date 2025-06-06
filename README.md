@@ -21,8 +21,8 @@ $ npm -v
 
 ```sh
 $ npm init
-$ npm i axios express pug
-$ npm i @babel/core @babel/node @babel/preset-env
+$ npm i axios express morgan pug
+$ npm i -D @babel/core @babel/node @babel/preset-env
 $ npm i -D nodemon
 ```
 
