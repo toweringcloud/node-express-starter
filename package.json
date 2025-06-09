@@ -2,7 +2,7 @@
   "name": "node-express-starter",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "license": "MIT",
   "private": true,
