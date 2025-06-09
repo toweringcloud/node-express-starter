@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+    title Home Page
+  body
+    header
+      h1 Welcome to the Express Node Starter
+      nav
+        ul
+          li: a(href="/") Home
+          li: a(href="/about") About
+          li: a(href="/contact") Contact
+    main
+      h2 Home Page Content
+      p This is the home page of your Express Node.js application.
+    footer
+      p © #{Date.now().getFullYear()} DiNo. All rights reserved.
