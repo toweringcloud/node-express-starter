@@ -1,10 +1,12 @@
 import express from "express";
 import morgan from "morgan";
+import path from 'path';
+import bodyParser from 'body-parser';
 
-import globalRouter from "./routers/globalRouter.js";
-import storyRouter from "./routers/storyRouter.js";
-import userRouter from "./routers/userRouter.js";
-import movieRouter from "./routers/movieRouter.js";
+import globalRouter from "./routers/globalRouter";
+import storyRouter from "./routers/storyRouter";
+import userRouter from "./routers/userRouter";
+import movieRouter from "./routers/movieRouter";
 
 import { localsMiddleware } from './middlewares';
 import './db';
@@ -13,10 +15,11 @@ const app = express();
 
 // Templating Engine
 app.set("view engine", "pug");
-app.set("views", process.cwd() + "/src/views");
+app.set("views", path.join(__dirname, "views"));
 
 // Form Data Parsing
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Custom Middlewares
 const logger = morgan("dev");

@@ -1,6 +1,6 @@
 import express from "express";
-import { signUp, signIn, signOut } from '../controllers/userController.js';
-import { home, trending, newStory } from '../controllers/storyController.js';
+import { signUp, signIn, signOut } from '../controllers/userController';
+import { home, trending, newStory } from '../controllers/storyController';
 
 const globalRouter = express.Router();
 globalRouter.get('/', home);

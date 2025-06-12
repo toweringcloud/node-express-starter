@@ -1,5 +1,5 @@
 import express from "express";
-import { info, edit, remove } from '../controllers/storyController.js';
+import { info, edit, remove } from '../controllers/storyController';
 
 const storyRouter = express.Router();
 storyRouter.get('/:id(\\d+)', info);
