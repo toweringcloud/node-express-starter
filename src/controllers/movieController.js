@@ -6,6 +6,7 @@ import {
   getMovieByMinimumYear,
 } from '../db';
 
+// queries
 export const home = (req, res) => {
   const movies = getMovies();
   return res.render('movie_list', { pageTitle: 'Movies!', movies });
@@ -32,6 +33,8 @@ export const filter = (req, res) => {
     });
   }
 };
+
+// mutations
 export const getAdd = (req, res) => {
   return res.render('movie_add', { pageTitle: 'Add Movie' });
 };

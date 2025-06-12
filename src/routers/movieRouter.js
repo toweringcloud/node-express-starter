@@ -1,5 +1,6 @@
 import express from 'express';
-import { home, detail, filter, getAdd, postAdd, getEdit, postEdit } from '../controllers/movieController';
+import { home, detail, filter } from '../controllers/movieController';
+import { getAdd, postAdd, getEdit, postEdit } from '../controllers/movieController';
 
 const movieRouter = express.Router();
 movieRouter.get('/', home);
