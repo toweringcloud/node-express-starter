@@ -22,9 +22,20 @@ const MovieSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  data: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
 });
 

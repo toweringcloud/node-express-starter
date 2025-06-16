@@ -11,17 +11,17 @@ export const search = async (req, res) => {
   if (keyword) {
     movies = await Movie.find({
       title: {
-        $regex: new RegExp(`${keyword}$`, "i"),
+        $regex: new RegExp(`$${keyword}$`, "i"),
       },
     });
+    return res.render("home", { pageTitle: "Search", movies });
   }
-  return res.render("search", { pageTitle: "Search", movies });
 };
 export const detail = async (req, res) => {
   const { id } = req.params;
   const movie = await Movie.findById(id);
   if (!movie) {
-    return res.status(404).send("Movie not found");
+    return res.render("404", { pageTitle: "Movie not found." });
   }
   return res.render("detail", { pageTitle: movie.title, movie });
 };
@@ -45,7 +45,7 @@ export const createMovie = async (req, res) => {
   } catch (error) {
     console.error("Error adding movie:", error);
     return res.render("upload", {
-      pageTitle: "Upload Movie",
+      pageTitle: "Add Movie",
       errorMessage: error._message,
     });
   }
@@ -57,7 +57,7 @@ export const editMovie = async (req, res) => {
   if (!movie) {
     return res.render("404", { pageTitle: "Movie not found." });
   }
-  return res.render("edit", { pageTitle: `Edit: ${movie.title}`, video });
+  return res.render("edit", { pageTitle: `Edit: ${movie.title}`, movie });
 };
 export const updateMovie = async (req, res) => {
   const { id } = req.params;

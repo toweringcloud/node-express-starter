@@ -3,9 +3,9 @@ include mixins/movie
 
 block content
   h2=pageTitle
-  form(action="/filter" method="get")
-    input(type="text" name="year" placeholder="Filter by year")
-    input(type="text" name="rating" placeholder="Filter by rating")
+  p.info Please fill the keyword to search by title.
+  form(action="/search" method="GET")
+    input(type="text" name="keyword" placeholder="Search by title" minlnegth=3 required)
     input(type="submit" value="SEARCH")
     //- button Search
   each item in movies

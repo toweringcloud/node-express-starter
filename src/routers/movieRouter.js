@@ -6,20 +6,20 @@ import {
   detail,
   addMovie,
   createMovie,
-  updateMovie,
   editMovie,
+  updateMovie,
   deleteMovie,
 } from "../controllers/movieController";
 
 const movieRouter = express.Router();
 movieRouter.get("/", home);
+movieRouter.get("/search", search);
 movieRouter.get("/movies/:id([0-9a-f]{24})", detail);
-movieRouter.get("/movies/:id([0-9a-f]{24})/delete", deleteMovie);
+movieRouter.route("/upload").get(addMovie).post(createMovie);
 movieRouter
   .route("/movies/:id([0-9a-f]{24})/edit")
   .get(editMovie)
   .post(updateMovie);
-movieRouter.get("/search", search);
-movieRouter.route("/upload").get(addMovie).post(createMovie);
+movieRouter.get("/movies/:id([0-9a-f]{24})/delete", deleteMovie);
 
 export default movieRouter;

@@ -2,13 +2,18 @@ extends templates/layout
 
 block content
   h2=movie.title
-  if movie.medium_cover_image
-    img(src=`${movie.medium_cover_image}`)
-  p=movie.synopsis
-  h3 😎 released at #{movie.year || new Date().getFullYear()}
-  h3 😎 rating : #{movie.rating || 0} of 10
+  if movie.coverImage
+    img(src=`${movie.coverImage}`)
+  p=movie.summary
+  //- h3 😎 released at #{movie.year || new Date().getFullYear()}
+  //- h3 😎 rating : #{movie.rating || 0} of 10
   if movie.genres
-    h3 😎 genres of movie
-    ul
-      each genre in movie.genres
-        li #{genre}
+    each genre in movie.genres
+      li #{genre}
+  hr
+  li
+    a.btn.btn-primary(href=`/movies/${movie.id}/edit`, role="button") Edit Movie
+  li
+    a.btn.btn-destructive(href=`/movies/${movie.id}/delete`, role="button") Delete Movie
+  //- button(type="button", onclick=`window.location.href='/movies/${movie.id}/edit'`) Edit Movie
+  //- button(type="button", onclick=`window.location.href='/movies/${movie.id}/delete'`) Delete Movie
