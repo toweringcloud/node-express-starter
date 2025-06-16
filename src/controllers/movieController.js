@@ -1,62 +1,84 @@
-import {
-  addMovie,
-  getMovieById,
-  getMovies,
-  getMovieByMinimumRating,
-  getMovieByMinimumYear,
-} from '../db';
+import Movie from "../models/Movie.js";
 
-// queries
-export const home = (req, res) => {
-  const movies = getMovies();
-  return res.render('movie_list', { pageTitle: 'Movies!', movies });
+// queries (read-list/search/detail)
+export const home = async (req, res) => {
+  const movies = await Movie.find({}).sort({ createdAt: -1 });
+  return res.render("home", { pageTitle: "Home", movies });
 };
-export const detail = (req, res) => {
-  const movie = getMovieById(req.params.id);
-  return res.render('movie_detail', { pageTitle: movie.title, movie });
-};
-export const filter = (req, res) => {
-  const year = req.query.year;
-  if (year) {
-    const movies = getMovieByMinimumYear(year);
-    return res.render('movie_list', {
-      pageTitle: `Filter by year: ${year}`,
-      movies,
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  let movies = [];
+  if (keyword) {
+    movies = await Movie.find({
+      title: {
+        $regex: new RegExp(`${keyword}$`, "i"),
+      },
     });
   }
-  const rating = req.query.rating;
-  if (rating) {
-    const movies = getMovieByMinimumRating(rating);
-    return res.render('movie_list', {
-      pageTitle: `Filter by rating: ${rating}`,
-      movies,
-    });
-  }
+  return res.render("search", { pageTitle: "Search", movies });
 };
-
-// mutations
-export const getAdd = (req, res) => {
-  return res.render('movie_add', { pageTitle: 'Add Movie' });
-};
-export const postAdd = (req, res) => {
-  const { title, synopsis, genres } = req.body;
-  addMovie({ title, synopsis, genres: genres.split(',') });
-  return res.redirect('/');
-};
-export const getEdit = (req, res) => {
-  return res.render('movie_edit', { pageTitle: 'Edit Movie' });
-};
-export const postEdit = (req, res) => {
+export const detail = async (req, res) => {
   const { id } = req.params;
-  if (!getMovieById(id)) {
-    return res.status(404).send('Movie not found');
+  const movie = await Movie.findById(id);
+  if (!movie) {
+    return res.status(404).send("Movie not found");
   }
-  const { title } = req.body;
-  getMovies().map((movie) => {
-    if (movie.id === parseInt(id, 10)) {
-      return { ...movie, title };
+  return res.render("detail", { pageTitle: movie.title, movie });
+};
+
+// mutations (create, update, delete)
+export const addMovie = (req, res) => {
+  return res.render("upload", { pageTitle: "Add Movie" });
+};
+export const createMovie = async (req, res) => {
+  const { title, summary, genres } = req.body;
+  try {
+    if (!title || !summary || !genres) {
+      throw new Error("All fields are required.");
     }
-    return movie;
+    await Movie.create({
+      title,
+      summary,
+      genres: genres.split(",").map((genre) => genre.trim()),
+    });
+    return res.redirect("/");
+  } catch (error) {
+    console.error("Error adding movie:", error);
+    return res.render("upload", {
+      pageTitle: "Upload Movie",
+      errorMessage: error._message,
+    });
+  }
+};
+
+export const editMovie = async (req, res) => {
+  const { id } = req.params;
+  const movie = await Movie.findById(id);
+  if (!movie) {
+    return res.render("404", { pageTitle: "Movie not found." });
+  }
+  return res.render("edit", { pageTitle: `Edit: ${movie.title}`, video });
+};
+export const updateMovie = async (req, res) => {
+  const { id } = req.params;
+  const movie = await Movie.findById(id);
+  if (!movie) {
+    return res.render("404", { pageTitle: "Movie not found." });
+  }
+
+  const { title, summary, year, rating, genres } = req.body;
+  await Movie.findByIdAndUpdate(id, {
+    title,
+    summary,
+    year: parseInt(year, 10),
+    rating: parseFloat(rating),
+    genres: genres.split(",").map((genre) => genre.trim()),
   });
-  return res.redirect('/movies');
+  return res.redirect("/");
+};
+
+export const deleteMovie = async (req, res) => {
+  const { id } = req.params;
+  await Movie.findByIdAndDelete(id);
+  return res.redirect("/");
 };

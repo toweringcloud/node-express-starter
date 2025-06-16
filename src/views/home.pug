@@ -1,9 +1,14 @@
-extends layout.pug
+extends templates/layout
+include mixins/movie
 
 block content
-    main
-        h2 Home Page Content
-        p This is the home page of your Express Node App.
-        p You can customize this page to suit your needs.
-        li
-            a(href="/movies") Go to Movies List
+  h2=pageTitle
+  form(action="/filter" method="get")
+    input(type="text" name="year" placeholder="Filter by year")
+    input(type="text" name="rating" placeholder="Filter by rating")
+    input(type="submit" value="SEARCH")
+    //- button Search
+  each item in movies
+    +movie(item)
+  else
+    li Sorry, No Movies

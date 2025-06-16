@@ -1,0 +1,9 @@
+extends templates/layout
+
+block content
+  h2=pageTitle
+  form(action="/upload" method="POST")
+    input(type="text" name="title" placeholder="영화 제목" required maxlength=50)
+    input(type="text" name="summary" placeholder="줄거리" required minlength=20)
+    input(type="text" name="genres" placeholder="장르 (,로 구분)" required)
+    input(type="submit" value="SAVE")
