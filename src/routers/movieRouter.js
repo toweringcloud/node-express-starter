@@ -1,9 +1,9 @@
 import express from "express";
 
 import {
-  home,
-  search,
-  watch,
+  listMovie,
+  searchMovie,
+  watchMovie,
   addMovie,
   createMovie,
   editMovie,
@@ -13,9 +13,9 @@ import {
 
 const movieRouter = express.Router();
 // queries
-movieRouter.get("/", home);
-movieRouter.get("/search", search);
-movieRouter.get("/movies/:id([0-9a-f]{24})", watch);
+movieRouter.get("/", listMovie);
+movieRouter.get("/search", searchMovie);
+movieRouter.get("/movies/:id([0-9a-f]{24})", watchMovie);
 // mutations
 movieRouter.route("/upload").get(addMovie).post(createMovie);
 movieRouter

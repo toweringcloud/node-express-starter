@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MovieSchema = mongoose.Schema({
+const MovieSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -39,16 +39,27 @@ const MovieSchema = mongoose.Schema({
   },
 });
 
-// middleware to format genres before saving
+// middleware to format some fields before saving
+// Case I
+// export const formatYear = (year) => {
+//   const parsed = parseInt(year, 10);
+//   return isNaN(parsed) ? new Date().getFullYear() : parsed;
+// };
+// export const formatGenres = (year) => {
+//   const parsed = genres.split(",").map((genre) => genre.trim());
+//   return !parsed ? [] : parsed;
+// };
+
+// Case II
 // MovieSchema.pre("save", function (next) {
 //   this.year = year ? parseInt(year, 10) : new Date().getFullYear();
 //   this.genres = this.genres[0].split(",").map((genre) => genre.trim());
 //   next();
 // });
+
+// Case III
 MovieSchema.static("formatYear", function (year) {
-  return year && year.length() == 4
-    ? parseInt(year, 10)
-    : new Date().getFullYear();
+  return year ? parseInt(year, 10) : new Date().getFullYear();
 });
 MovieSchema.static("formatGenres", function (genres) {
   return genres.split(",").map((genre) => genre.trim());

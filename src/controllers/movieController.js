@@ -1,12 +1,12 @@
 import Movie from "../models/Movie.js";
 
 // queries (read-list/search/watch)
-export const home = async (req, res) => {
+export const listMovie = async (req, res) => {
   const movies = await Movie.find({}).sort({ createdAt: -1 });
   return res.render("home", { pageTitle: "Home", movies });
 };
 
-export const search = async (req, res) => {
+export const searchMovie = async (req, res) => {
   const { keyword } = req.query;
   let movies = [];
   if (keyword) {
@@ -20,7 +20,7 @@ export const search = async (req, res) => {
   return res.render("search", { pageTitle: "Search", keyword, movies });
 };
 
-export const watch = async (req, res) => {
+export const watchMovie = async (req, res) => {
   const { id } = req.params;
   const movie = await Movie.findById(id);
   if (!movie) {
