@@ -22,7 +22,7 @@ const MovieSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  data: {
+  posterImage: {
     type: String,
   },
   createdAt: {
@@ -37,6 +37,15 @@ const MovieSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
+});
+
+// middleware to format genres before saving
+// MovieSchema.pre("save", function (next) {
+//   this.genres = this.genres[0].split(",").map((genre) => genre.trim());
+//   next();
+// });
+MovieSchema.static("formatGenres", function (genres) {
+  return genres.split(",").map((genre) => genre.trim());
 });
 
 const Movie = mongoose.model("Movie", MovieSchema);

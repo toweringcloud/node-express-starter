@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import path from "path";
+// import path from "path";
 
 import { localsMiddleware } from "./middlewares";
 import movieRouter from "./routers/movieRouter";
@@ -10,12 +10,14 @@ const logger = morgan("dev");
 
 // Templating Engine
 app.set("view engine", "pug");
-app.set("views", path.join(__dirname, "views"));
+// app.set("views", path.join(__dirname, "views"));
+app.set("views", process.cwd() + "/src/views");
 
 // Custom Middlewares
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 app.use(localsMiddleware);
+app.use(express.static("public"));
 
 // Custom Routes
 app.use("/", movieRouter);

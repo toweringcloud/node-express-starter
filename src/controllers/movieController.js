@@ -31,7 +31,7 @@ export const addMovie = (req, res) => {
   return res.render("upload", { pageTitle: "Add Movie" });
 };
 export const createMovie = async (req, res) => {
-  const { title, summary, genres } = req.body;
+  const { title, summary, genres, posterImage } = req.body;
   try {
     if (!title || !summary || !genres) {
       throw new Error("All fields are required.");
@@ -39,7 +39,8 @@ export const createMovie = async (req, res) => {
     await Movie.create({
       title,
       summary,
-      genres: genres.split(",").map((genre) => genre.trim()),
+      genres: Movie.formatGenres(genres),
+      posterImage,
     });
     return res.redirect("/");
   } catch (error) {
@@ -61,18 +62,19 @@ export const editMovie = async (req, res) => {
 };
 export const updateMovie = async (req, res) => {
   const { id } = req.params;
-  const movie = await Movie.findById(id);
+  const movie = await Movie.exists({ _id: id });
   if (!movie) {
     return res.render("404", { pageTitle: "Movie not found." });
   }
-
-  const { title, summary, year, rating, genres } = req.body;
+  const { title, summary, year, rating, genres, posterImage } = req.body;
   await Movie.findByIdAndUpdate(id, {
     title,
     summary,
-    year: parseInt(year, 10),
-    rating: parseFloat(rating),
-    genres: genres.split(",").map((genre) => genre.trim()),
+    genres: Movie.formatGenres(genres),
+    year: year ? parseInt(year, 10) : new Date().getFullYear(),
+    rating: rating ? parseFloat(rating) : 0,
+    posterImage,
+    updatedAt: Date.now(),
   });
   return res.redirect("/");
 };

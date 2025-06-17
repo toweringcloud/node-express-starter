@@ -20,6 +20,6 @@ movieRouter
   .route("/movies/:id([0-9a-f]{24})/edit")
   .get(editMovie)
   .post(updateMovie);
-movieRouter.get("/movies/:id([0-9a-f]{24})/delete", deleteMovie);
+movieRouter.route("/movies/:id([0-9a-f]{24})/delete").get(deleteMovie);
 
 export default movieRouter;
