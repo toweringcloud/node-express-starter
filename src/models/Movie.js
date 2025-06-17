@@ -13,7 +13,6 @@ const MovieSchema = mongoose.Schema({
     trim: true,
     minLength: 20,
   },
-  genres: [{ type: String, required: true }],
   year: {
     type: Number,
     default: new Date().getFullYear(),
@@ -22,6 +21,7 @@ const MovieSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  genres: [{ type: String }],
   posterImage: {
     type: String,
   },
@@ -41,9 +41,15 @@ const MovieSchema = mongoose.Schema({
 
 // middleware to format genres before saving
 // MovieSchema.pre("save", function (next) {
+//   this.year = year ? parseInt(year, 10) : new Date().getFullYear();
 //   this.genres = this.genres[0].split(",").map((genre) => genre.trim());
 //   next();
 // });
+MovieSchema.static("formatYear", function (year) {
+  return year && year.length() == 4
+    ? parseInt(year, 10)
+    : new Date().getFullYear();
+});
 MovieSchema.static("formatGenres", function (genres) {
   return genres.split(",").map((genre) => genre.trim());
 });

@@ -34,14 +34,15 @@ export const addMovie = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Movie" });
 };
 export const createMovie = async (req, res) => {
-  const { title, summary, genres, posterImage } = req.body;
+  const { title, summary, year, genres, posterImage } = req.body;
   try {
-    if (!title || !summary || !genres) {
-      throw new Error("All fields are required.");
+    if (!title || !summary) {
+      throw new Error("Mandatory fields are required.");
     }
     await Movie.create({
       title,
       summary,
+      year: Movie.formatYear(year),
       genres: Movie.formatGenres(genres),
       posterImage,
     });
@@ -73,9 +74,9 @@ export const updateMovie = async (req, res) => {
   await Movie.findByIdAndUpdate(id, {
     title,
     summary,
-    genres: Movie.formatGenres(genres),
-    year: year ? parseInt(year, 10) : new Date().getFullYear(),
+    year: Movie.formatYear(year),
     rating: rating ? parseFloat(rating) : 0,
+    genres: Movie.formatGenres(genres),
     posterImage,
     updatedAt: Date.now(),
   });
