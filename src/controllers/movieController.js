@@ -1,23 +1,26 @@
 import Movie from "../models/Movie.js";
 
-// queries (read-list/search/detail)
+// queries (read-list/search/watch)
 export const home = async (req, res) => {
   const movies = await Movie.find({}).sort({ createdAt: -1 });
   return res.render("home", { pageTitle: "Home", movies });
 };
+
 export const search = async (req, res) => {
   const { keyword } = req.query;
   let movies = [];
   if (keyword) {
     movies = await Movie.find({
       title: {
-        $regex: new RegExp(`$${keyword}$`, "i"),
+        $regex: new RegExp(keyword, "i"),
       },
     });
-    return res.render("home", { pageTitle: "Search", movies });
+    console.log(keyword, movies);
   }
+  return res.render("search", { pageTitle: "Search", keyword, movies });
 };
-export const detail = async (req, res) => {
+
+export const watch = async (req, res) => {
   const { id } = req.params;
   const movie = await Movie.findById(id);
   if (!movie) {
@@ -28,7 +31,7 @@ export const detail = async (req, res) => {
 
 // mutations (create, update, delete)
 export const addMovie = (req, res) => {
-  return res.render("upload", { pageTitle: "Add Movie" });
+  return res.render("upload", { pageTitle: "Upload Movie" });
 };
 export const createMovie = async (req, res) => {
   const { title, summary, genres, posterImage } = req.body;
