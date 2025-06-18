@@ -11,6 +11,8 @@ if loggedIn
   span &nbsp;
   span
     a(href="/logout") Logout
+  span
+    small=` (${loggedInUser.username})`
 else
   span
     a(href="/join") Join
