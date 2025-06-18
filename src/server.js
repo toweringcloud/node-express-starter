@@ -4,10 +4,10 @@ import path from "path";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 
-import { localsMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import movieRouter from "./routers/movieRouter";
 import userRouter from "./routers/userRouter";
+import { localsMiddleware } from "./middlewares";
 
 const app = express();
 

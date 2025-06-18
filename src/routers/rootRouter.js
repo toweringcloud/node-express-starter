@@ -1,9 +1,13 @@
 import express from "express";
 
 import { listMovie, searchMovie } from "../controllers/movieController";
-import { getJoin, postJoin } from "../controllers/userController";
-import { getLogin, postLogin } from "../controllers/userController";
-import { logout } from "../controllers/userController";
+import {
+  getJoin,
+  postJoin,
+  getLogin,
+  postLogin,
+  logout,
+} from "../controllers/userController";
 
 const rootRouter = express.Router();
 
