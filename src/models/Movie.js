@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MovieSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -51,19 +51,19 @@ const MovieSchema = new mongoose.Schema({
 // };
 
 // Case II
-// MovieSchema.pre("save", function (next) {
+// movieSchema.pre("save", function (next) {
 //   this.year = year ? parseInt(year, 10) : new Date().getFullYear();
 //   this.genres = this.genres[0].split(",").map((genre) => genre.trim());
 //   next();
 // });
 
 // Case III
-MovieSchema.static("formatYear", function (year) {
+movieSchema.static("formatYear", function (year) {
   return year ? parseInt(year, 10) : new Date().getFullYear();
 });
-MovieSchema.static("formatGenres", function (genres) {
+movieSchema.static("formatGenres", function (genres) {
   return genres.split(",").map((genre) => genre.trim());
 });
 
-const Movie = mongoose.model("Movie", MovieSchema);
+const Movie = mongoose.model("Movie", movieSchema);
 export default Movie;

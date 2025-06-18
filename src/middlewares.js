@@ -1,4 +1,7 @@
 export const localsMiddleware = (req, res, next) => {
-  res.locals.siteTitle = 'Nomad Movies';
+  console.log(req.sessionID);
+  res.locals.siteTitle = "The Movies";
+  res.locals.loggedIn = Boolean(req.session.loggedIn);
+  res.locals.loggedInUser = req.session.user;
   next();
 };

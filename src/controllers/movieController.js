@@ -31,7 +31,7 @@ export const watchMovie = async (req, res) => {
 
 // mutations (create, update, delete)
 export const addMovie = (req, res) => {
-  return res.render("upload", { pageTitle: "Upload Movie" });
+  return res.render("upload", { pageTitle: "Upload" });
 };
 export const createMovie = async (req, res) => {
   const { title, summary, year, genres, posterImage } = req.body;
@@ -50,7 +50,7 @@ export const createMovie = async (req, res) => {
   } catch (error) {
     console.error("Error adding movie:", error);
     return res.render("upload", {
-      pageTitle: "Add Movie",
+      pageTitle: "Upload Movie",
       errorMessage: error._message,
     });
   }
