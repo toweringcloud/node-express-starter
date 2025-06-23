@@ -14,6 +14,7 @@ const app = express();
 // Templating Engine
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
+// app.set("views", process.cwd() + "/src/views");
 
 // Common Logger
 const logger = morgan("dev");
