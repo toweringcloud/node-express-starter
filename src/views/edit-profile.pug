@@ -1,0 +1,11 @@
+extends templates/layout
+
+block content
+  h2=pageTitle
+  p.info Please edit your profile if necessary.
+  form(method="POST")
+    input(type="email" name="email" placeholder="Email" required value=loggedInUser.email)
+    input(type="text" name="username" placeholder="Username" required value=loggedInUser.username)
+    input(type="text" name="nickname" placeholder="Nickname" value=loggedInUser.nickname)
+    input(type="text" name="location" placeholder="Location" value=loggedInUser.location)
+    input(type="submit", value="SAVE")
