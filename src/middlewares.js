@@ -6,7 +6,7 @@ export const localsMiddleware = (req, res, next) => {
   next();
 };
 
-export const protectorMiddleware = (req, res, next) => {
+export const protector = (req, res, next) => {
   if (req.session.loggedIn) {
     return next();
   } else {
@@ -14,7 +14,7 @@ export const protectorMiddleware = (req, res, next) => {
   }
 };
 
-export const publicOnlyMiddleware = (req, res, next) => {
+export const publicOnly = (req, res, next) => {
   if (!req.session.loggedIn) {
     return next();
   } else {
