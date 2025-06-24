@@ -100,7 +100,7 @@ export const postChange = async (req, res) => {
     session: {
       user: { _id },
     },
-    body: { oldPassword, newPassword, newPasswordConfirmation },
+    body: { oldPassword, newPassword, newPassword2 },
   } = req;
   const user = await User.findById(_id);
   const ok = await bcrypt.compare(oldPassword, user.password);
@@ -110,7 +110,7 @@ export const postChange = async (req, res) => {
       errorMessage: "😖 The current password is incorrect",
     });
   }
-  if (newPassword !== newPasswordConfirmation) {
+  if (newPassword !== newPassword2) {
     return res.status(400).render("change-pw", {
       pageTitle: "Change Password",
       errorMessage: "😖 The password does not match the confirmation",
