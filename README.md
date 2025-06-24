@@ -21,6 +21,8 @@ $ npm -v
 - run nodejs app with nodemon environment
 
 ```sh
+$ npm init
+$ npm i
 $ vi .env
 API_PORT_NO=4000
 COOKIE_SECRET={YOUR_COOKIE_SECRET}
@@ -29,9 +31,6 @@ GH_API_URL=https://api.github.com
 GH_AUTH_URL=https://github.com/login/oauth
 GH_CLIENT_ID={YOUR_GITHUB_CLIENT_ID}
 GH_CLIENT_SECRET={YOUR_GITHUB_CLIENT_SECRET}
-
-$ npm init
-$ npm i
 ```
 
 ### launch
