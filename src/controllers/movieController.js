@@ -17,7 +17,7 @@ export const searchMovie = async (req, res) => {
     });
     console.log(keyword, movies);
   }
-  return res.render("search", { pageTitle: "Movie Search", keyword, movies });
+  return res.render("search", { pageTitle: "Search Movie", keyword, movies });
 };
 
 export const watchMovie = async (req, res) => {
@@ -31,10 +31,15 @@ export const watchMovie = async (req, res) => {
 
 // mutations (create, update, delete)
 export const addMovie = (req, res) => {
-  return res.render("upload", { pageTitle: "Movie Upload" });
+  return res.render("upload", { pageTitle: "Upload Movie" });
 };
 export const createMovie = async (req, res) => {
-  const { title, summary, year, genres, posterImage } = req.body;
+  const {
+    body: { title, summary, year, genres, posterImage },
+    file,
+  } = req;
+  console.log(`# addMovie: ${JSON.stringify(file)}`);
+
   try {
     if (!title || !summary) {
       throw new Error("Mandatory fields are required.");
@@ -45,6 +50,7 @@ export const createMovie = async (req, res) => {
       year: Movie.formatYear(year),
       genres: Movie.formatGenres(genres),
       posterImage,
+      fileUrl: file ? file.path : undefined,
     });
     return res.redirect("/");
   } catch (error) {
@@ -70,7 +76,12 @@ export const updateMovie = async (req, res) => {
   if (!movie) {
     return res.render("404", { pageTitle: "Movie not found." });
   }
-  const { title, summary, year, rating, genres, posterImage } = req.body;
+  const {
+    body: { title, summary, year, rating, genres, posterImage },
+    file,
+  } = req;
+  console.log(`# updateMovie: ${file}`);
+
   await Movie.findByIdAndUpdate(id, {
     title,
     summary,
@@ -78,6 +89,7 @@ export const updateMovie = async (req, res) => {
     rating: rating ? parseFloat(rating) : 0,
     genres: Movie.formatGenres(genres),
     posterImage,
+    fileUrl: file ? file.path : undefined,
     updatedAt: Date.now(),
   });
   return res.redirect("/");

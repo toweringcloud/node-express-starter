@@ -16,11 +16,12 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 // app.set("views", process.cwd() + "/src/views");
 
-// Common Logger
+// Logger & ...
 const logger = morgan("dev");
 app.use(logger);
+app.use(express.urlencoded({ extended: true }));
 
-// Cookie Session
+// Session for Cookie
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -29,11 +30,13 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
+app.use(localsMiddleware);
+
+// Public Path
+app.use(express.static("public"));
+app.use("/uploads", express.static("files"));
 
 // Custom Routes
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/movies", movieRouter);
 app.use("/users", userRouter);
