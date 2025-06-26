@@ -16,12 +16,12 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 // app.set("views", process.cwd() + "/src/views");
 
-// Logger & ...
+// Logger & Options
 const logger = morgan("dev");
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 
-// Session for Cookie
+// Cookie Session
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -32,11 +32,12 @@ app.use(
 );
 app.use(localsMiddleware);
 
-// Public Path
+// Static Routes
 app.use(express.static("public"));
-app.use("/uploads", express.static("files"));
+app.use("/upload", express.static("files"));
+app.use("/static", express.static("assets"));
 
-// Custom Routes
+// Dynamic Routes
 app.use("/", rootRouter);
 app.use("/movies", movieRouter);
 app.use("/users", userRouter);

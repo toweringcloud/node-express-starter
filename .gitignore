@@ -137,5 +137,5 @@ dist
 
 # Additional
 package-lock.json
-uploads/
 files/
+assets/

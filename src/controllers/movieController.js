@@ -81,7 +81,7 @@ export const editMovie = async (req, res) => {
 export const updateMovie = async (req, res) => {
   const { id } = req.params;
   const { user } = req.session;
-  const movie = await Movie.exists({ _id: id });
+  const movie = await Movie.findById(id);
   if (!movie) {
     return res.render("404", { pageTitle: "Movie not found." });
   }

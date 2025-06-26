@@ -21,7 +21,7 @@ block content
           .flex-container2
             span=movie.genres.join(", ")
             span=`✨ ${movie.rating}`
-          video(src=`/${movie.fileUrl.replace("files", "uploads")}` width='100%' controls)
+          video(src=`/${movie.fileUrl.replace("files", "upload")}` width='100%' controls)
           p
         else
           each genre in movie.genres
