@@ -45,4 +45,4 @@ $ npm run dev
 
 - download sample media file
   - [Pexcel](https://www.pexels.com)
-  - [Sample](https://www.sample-videos.com)
+  - [Others](https://www.sample-videos.com)
