@@ -18,12 +18,17 @@ $ npm -v
 
 ### configure
 
-- run nodejs app with nodemon environment
+- install packages with npm packager
 
 ```sh
 $ npm init
 $ npm i
-$ vi .env
+```
+
+- create runtime variables
+
+```sh
+$ cat .env
 API_PORT_NO=4000
 COOKIE_SECRET={YOUR_COOKIE_SECRET}
 DB_URL=mongodb://127.0.0.1:27017/movie
@@ -35,7 +40,16 @@ GH_CLIENT_SECRET={YOUR_GITHUB_CLIENT_SECRET}
 
 ### launch
 
-- run nodejs app with nodemon environment
+- update nodemon setting
+
+```json
+{
+  "ignore": ["webpack.config.js", "src/client/*", "assets/*"],
+  "exec": "babel-node src/index.js"
+}
+```
+
+- run nodejs app with development mode
 
 ```sh
 $ npm run dev

@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 import User from "../models/User";
 
-export const getJoin = (req, res) => {
+export const signupView = (req, res) => {
   return res.render("join", { pageTitle: "Join" });
 };
-export const postJoin = async (req, res) => {
+export const signup = async (req, res) => {
   const { username, email, password, password2 } = req.body;
   const pageTitle = "Join";
   if (password !== password2) {
@@ -35,10 +35,10 @@ export const postJoin = async (req, res) => {
   }
 };
 
-export const getLogin = (req, res) => {
+export const signinView = (req, res) => {
   return res.render("login", { pageTitle: "Login" });
 };
-export const postLogin = async (req, res) => {
+export const signin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
   const user = await User.findOne({ username });
@@ -60,15 +60,27 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
-export const logout = (req, res) => {
+export const signout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
 
-export const getEdit = (req, res) => {
+export const readProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("movies");
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found." });
+  }
+  return res.render("profile", {
+    pageTitle: user.username,
+    user,
+  });
+};
+
+export const updateProfileView = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
-export const postEdit = async (req, res) => {
+export const updateProfile = async (req, res) => {
   const {
     session: {
       user: { _id, avatarUrl },
@@ -91,13 +103,13 @@ export const postEdit = async (req, res) => {
   return res.redirect("/users/edit");
 };
 
-export const getChange = (req, res) => {
+export const changePasswordView = (req, res) => {
   if (req.session.user.socialOnly === true) {
     return res.redirect("/");
   }
   return res.render("change-pw", { pageTitle: "Change Password" });
 };
-export const postChange = async (req, res) => {
+export const changePassword = async (req, res) => {
   const {
     session: {
       user: { _id },
@@ -121,16 +133,4 @@ export const postChange = async (req, res) => {
   user.password = newPassword;
   await user.save();
   return res.redirect("/users/logout");
-};
-
-export const see = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id).populate("movies");
-  if (!user) {
-    return res.status(404).render("404", { pageTitle: "User not found." });
-  }
-  return res.render("profile", {
-    pageTitle: user.username,
-    user,
-  });
 };

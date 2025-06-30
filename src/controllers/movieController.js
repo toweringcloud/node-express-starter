@@ -21,7 +21,7 @@ export const searchMovie = async (req, res) => {
   return res.render("search", { pageTitle: "Search Movie", keyword, movies });
 };
 
-export const watchMovie = async (req, res) => {
+export const readMovie = async (req, res) => {
   const { id } = req.params;
   const movie = await Movie.findById(id).populate("owner");
   if (!movie) {
@@ -31,7 +31,7 @@ export const watchMovie = async (req, res) => {
 };
 
 // mutations (create, update, delete)
-export const addMovie = (req, res) => {
+export const createMovieView = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Movie" });
 };
 export const createMovie = async (req, res) => {
@@ -66,7 +66,7 @@ export const createMovie = async (req, res) => {
   }
 };
 
-export const editMovie = async (req, res) => {
+export const updateMovieView = async (req, res) => {
   const { id } = req.params;
   const { user } = req.session;
   const movie = await Movie.findById(id);
